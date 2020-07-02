@@ -1,0 +1,37 @@
+{
+    "name": "@botbind/dust",
+    "version": "13.1.4",
+    "description": "A utility library used by Bot Bind's open source",
+    "main": "src/index.js",
+    "types": "src/index.d.ts",
+    "files": [
+        "src"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/botbind/dust.git"
+    },
+    "author": "Bot Bind's Team",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/botbind/dust/issues"
+    },
+    "homepage": "https://github.com/botbind/dust#readme",
+    "scripts": {
+        "lint": "eslint . --report-unused-disable-directives && echo \"No errors found\"",
+        "lint:fix": "eslint . --fix && echo \"No errors found\"",
+        "test": "jest --coverage && tsc && npm run lint && echo \"No errors found\"",
+        "test:watch": "jest --watchAll"
+    },
+    "devDependencies": {
+        "babel-eslint": "^10.1.0",
+        "eslint": "^6.8.0",
+        "eslint-plugin-babel": "^5.3.0",
+        "jest": "^25.1.0",
+        "typescript": "^3.8.3"
+    },
+    "dependencies": {},
+    "engines": {
+        "node": ">=12.0.0"
+    }
+}
