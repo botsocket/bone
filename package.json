@@ -1,6 +1,6 @@
 {
     "name": "@botbind/dust",
-    "version": "13.1.4",
+    "version": "14.0.0",
     "description": "A utility library used by Bot Bind's open source",
     "main": "src/index.js",
     "types": "src/index.d.ts",
