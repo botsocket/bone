@@ -252,7 +252,7 @@ const obj2 = {
     [sym]: 'x',
 };
 
-const result = Dust.merge(obj, obj2); 
+const result = Dust.merge(obj, obj2);
 
 Dust.equal(result, {
     a: 1,
