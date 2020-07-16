@@ -249,23 +249,20 @@ describe('clone()', () => {
     });
 
     it('should clone object descriptors', () => {
-        const obj = Object.defineProperties(
-            { a: 1 },
-            {
-                b: {
-                    enumerable: false,
-                    value: 5,
-                },
+        const obj = Object.defineProperties({ a: 1 }, {
+            b: {
+                enumerable: false,
+                value: 5,
+            },
 
-                c: {
-                    enumerable: false,
+            c: {
+                enumerable: false,
 
-                    get() {
-                        return this.a;
-                    },
+                get() {
+                    return this.a;
                 },
             },
-        );
+        });
 
         const cloned = Dust.clone(obj);
 
