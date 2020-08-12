@@ -40,7 +40,7 @@ module.exports = internals.merge = function (target, source, options = {}, _seen
     if (_seen.has(target) ||
         _seen.has(source)) {
 
-        return source; // If only one is found, return the source. There's no point in continuing
+        return source;                                                              // If only one is found, return the source. There's no point in continuing
     }
 
     _seen.add(target);
@@ -80,7 +80,7 @@ module.exports = internals.merge = function (target, source, options = {}, _seen
         }
 
         if (sourceDescriptor.get ||
-            sourceDescriptor.set) { // Source descriptor contains accessors, therefore no value
+            sourceDescriptor.set) {                                                 // Source descriptor contains accessors, therefore no value
 
             Object.defineProperty(target, key, sourceDescriptor);
             continue;

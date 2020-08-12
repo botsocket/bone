@@ -92,7 +92,7 @@ module.exports = internals.equal = function (value, ref, options = {}, _seen = n
     if (_seen.has(value) &&
         _seen.has(ref)) {
 
-        return true; // If previous comparison between value and ref failed, the function would of returned.
+        return true;                                                            // If previous comparison between value and ref failed, the function would of returned.
     }
 
     _seen.add(value);
@@ -173,7 +173,7 @@ module.exports = internals.equal = function (value, ref, options = {}, _seen = n
 
     for (const key of keys) {
         if (deepFunction &&
-            (key === 'name' || key === 'length')) { // Skip function names and arities
+            (key === 'name' || key === 'length')) {                                 // Skip function names and arities
 
             continue;
         }
@@ -207,8 +207,9 @@ module.exports = internals.equal = function (value, ref, options = {}, _seen = n
     return true;
 };
 
+// Copied from https://github.com/chaijs/deep-eql
 internals.is = function (value, ref) {
-    // Copied from https://github.com/chaijs/deep-eql
+
     if (value === ref) {
         return value !== 0 || 1 / value === 1 / ref;
     }
