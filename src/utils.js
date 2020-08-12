@@ -1,14 +1,17 @@
 'use strict';
 
 exports.isArguments = function (value) {
+
     return Object.prototype.toString.call(value) === '[object Arguments]';
 };
 
 exports.isBuffer = function (value) {
+
     return typeof Buffer !== 'undefined' && Buffer.isBuffer(value);
 };
 
 exports.isTypedArray = function (value) {
+
     return (
         value instanceof Uint8Array ||
         value instanceof Uint8ClampedArray ||
@@ -23,10 +26,12 @@ exports.isTypedArray = function (value) {
 };
 
 exports.keys = function (value, symbol = true) {
+
     return symbol ? Reflect.ownKeys(value) : Object.getOwnPropertyNames(value);
 };
 
 exports.idx = function (key, length) {
+
     let idx = Number(key);
     if (!Number.isInteger(idx)) {
         return false;

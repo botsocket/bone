@@ -7,11 +7,7 @@
  *
  * @returns The result value.
  */
-declare function merge<Target, Source>(
-    target: Target,
-    source: Source,
-    options?: merge.Options,
-): Target extends object ? (Source extends object ? Target & Source : Source) : Source;
+declare function merge<T, S>(target: T, source: S, options?: merge.Options): T extends object ? (S extends object ? T & S : S) : S;
 
 declare namespace merge {
     interface Options {

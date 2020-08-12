@@ -7,22 +7,27 @@ const internals = {
 };
 
 describe('assert()', () => {
+
     it('should throw unknown error', () => {
+
         expect(() => Dust.assert(false)).toThrow('Unknown error');
         expect(() => Dust.assert(false, '')).toThrow('Unknown error');
     });
 
     it('should throw messages', () => {
+
         expect(() => Dust.assert(false, 'x')).toThrow('x');
         expect(() => Dust.assert(false, {})).toThrow('[object Object]');
     });
 
     it('should throw messages as errors', () => {
+
         const error = new TypeError('x');
         expect(() => Dust.assert(false, error)).toThrow(error);
     });
 
     it('should throw on any falsy values', () => {
+
         expect(() => Dust.assert(0, 'x')).toThrow('x');
         expect(() => Dust.assert(undefined, 'x')).toThrow('x');
         expect(() => Dust.assert(null, 'x')).toThrow('x');
@@ -31,6 +36,7 @@ describe('assert()', () => {
     });
 
     it('should do nothing on truthy values', () => {
+
         expect(Dust.assert(true, 'x')).toBe(undefined);
         expect(Dust.assert(1, 'x')).toBe(undefined);
         expect(Dust.assert('x', 'x')).toBe(undefined);
@@ -38,7 +44,9 @@ describe('assert()', () => {
 });
 
 describe('clone()', () => {
+
     it('should clone simple types', () => {
+
         expect(Dust.clone('x')).toBe('x');
         expect(Dust.clone(1)).toBe(1);
         expect(Dust.clone(true)).toBe(true);
@@ -47,16 +55,19 @@ describe('clone()', () => {
     });
 
     it('should clone functions', () => {
+
         const fn = () => { };
         expect(Dust.clone(fn)).toBe(fn);
     });
 
     it('should clone symbols', () => {
+
         const sym = Symbol('x');
         expect(Dust.clone(sym)).toBe(sym);
     });
 
     it('should clone string, number and boolean objects', () => {
+
         const objs = [new String('x'), new Number(1), new Boolean(false)];
         for (const obj of objs) {
             const cloned = Dust.clone(obj);
@@ -67,6 +78,7 @@ describe('clone()', () => {
     });
 
     it('should clone regexes', () => {
+
         const rx = /x/i;
         const cloned = Dust.clone(rx);
 
@@ -75,6 +87,7 @@ describe('clone()', () => {
     });
 
     it('should clone dates', () => {
+
         const date = new Date(0);
         const cloned = Dust.clone(date);
 
@@ -83,6 +96,7 @@ describe('clone()', () => {
     });
 
     it('should clone arraybuffers', () => {
+
         const buff = new ArrayBuffer(3);
         const cloned = Dust.clone(buff);
 
@@ -91,6 +105,7 @@ describe('clone()', () => {
     });
 
     it('should clone arrays', () => {
+
         const arr = [{ a: 'x' }];
         for (const shallow of [true, false]) {
             const cloned = Dust.clone(arr, { shallow });
@@ -102,6 +117,7 @@ describe('clone()', () => {
     });
 
     it('should clone holey arrays', () => {
+
         const arr = new Array(3);
         arr[1] = 'x';
 
@@ -110,6 +126,7 @@ describe('clone()', () => {
     });
 
     it('should clone buffers', () => {
+
         for (const shallow of [true, false]) {
             const buff = Buffer.from([1, 2, 3]);
             const cloned = Dust.clone(buff, { shallow });
@@ -123,6 +140,7 @@ describe('clone()', () => {
     });
 
     it('should clone dataviews', () => {
+
         const view = new DataView(new ArrayBuffer(8), 2, 1);
         for (const shallow of [true, false]) {
             const cloned = Dust.clone(view, { shallow });
@@ -134,6 +152,7 @@ describe('clone()', () => {
     });
 
     it('should clone typed arrays', () => {
+
         const buff = new ArrayBuffer(8);
         for (const ctor of internals.typedArrays) {
             for (const shallow of [true, false]) {
@@ -148,6 +167,7 @@ describe('clone()', () => {
     });
 
     it('should clone sets', () => {
+
         const set = new Set([{}]);
         for (const shallow of [true, false]) {
             const cloned = Dust.clone(set, { shallow });
@@ -159,6 +179,7 @@ describe('clone()', () => {
     });
 
     it('should clone maps', () => {
+
         const map = new Map([['x', {}]]);
         for (const shallow of [true, false]) {
             const cloned = Dust.clone(map, { shallow });
@@ -170,6 +191,7 @@ describe('clone()', () => {
     });
 
     it('should clone weakmaps and weaksets', () => {
+
         for (const ctor of [WeakMap, WeakSet]) {
             const input = new ctor();
             const cloned = Dust.clone(input);
@@ -180,7 +202,9 @@ describe('clone()', () => {
     });
 
     it('should clone arguments objects', () => {
+
         const fn = function () {
+
             for (const shallow of [true, false]) {
                 const cloned = Dust.clone(arguments, { shallow });
 
@@ -194,6 +218,7 @@ describe('clone()', () => {
     });
 
     it('should clone objects', () => {
+
         const sym = Symbol('x');
         const obj = {
             a: 'x',
@@ -212,6 +237,7 @@ describe('clone()', () => {
     });
 
     it('should not clone objects with immutable flag', () => {
+
         class X { }
 
         X.prototype.immutable = true;
@@ -221,6 +247,7 @@ describe('clone()', () => {
     });
 
     it('should ignore symbol keys', () => {
+
         const sym = Symbol('x');
         const obj = { [sym]: 1 };
         const clone = Dust.clone(obj, { symbol: false });
@@ -229,6 +256,7 @@ describe('clone()', () => {
     });
 
     it('should clone objects with null prototypes', () => {
+
         const obj = Object.create(null);
         obj.a = 1;
 
@@ -237,8 +265,10 @@ describe('clone()', () => {
     });
 
     it('should clone class instances', () => {
+
         class X {
             constructor() {
+
                 this.a = 1;
             }
         }
@@ -249,6 +279,7 @@ describe('clone()', () => {
     });
 
     it('should clone object descriptors', () => {
+
         const obj = Object.defineProperties({ a: 1 }, {
             b: {
                 enumerable: false,
@@ -259,6 +290,7 @@ describe('clone()', () => {
                 enumerable: false,
 
                 get() {
+
                     return this.a;
                 },
             },
@@ -274,6 +306,7 @@ describe('clone()', () => {
     });
 
     it('should handle circular references', () => {
+
         const obj = { a: 1, b: {} };
         obj.b = obj;
 
@@ -283,6 +316,7 @@ describe('clone()', () => {
     });
 
     it('should clone example object', () => {
+
         const ref = {};
         const sym = Symbol('test');
 
@@ -314,7 +348,9 @@ describe('clone()', () => {
 });
 
 describe('equal()', () => {
+
     it('should compare strings, numbers, booleans, undefineds, nulls and symbols', () => {
+
         expect(Dust.equal('x', 'x')).toBe(true);
         expect(Dust.equal('x', 'y')).toBe(false);
         expect(Dust.equal(-0, +0)).toBe(true);
@@ -335,6 +371,7 @@ describe('equal()', () => {
     });
 
     it('should compare functions', () => {
+
         const a = () => 1;
         const b = () => 2;
         const c = () => 2;
@@ -360,6 +397,7 @@ describe('equal()', () => {
     });
 
     it('should compare string, number and boolean objects', () => {
+
         expect(Dust.equal(new String('x'), new String('x'))).toBe(true);
         expect(Dust.equal(new String('x'), new String('y'))).toBe(false);
         expect(Dust.equal('x', new String('x'))).toBe(false);
@@ -379,6 +417,7 @@ describe('equal()', () => {
     });
 
     it('should compare with null', () => {
+
         expect(Dust.equal(null, {})).toBe(false);
         expect(Dust.equal({}, null)).toBe(false);
         expect(Dust.equal(null, null)).toBe(true);
@@ -387,6 +426,7 @@ describe('equal()', () => {
     });
 
     it('should return false if prototypes are not the same ', () => {
+
         expect(Dust.equal([], {})).toBe(false);
         expect(Dust.equal(Object.create(null), {})).toBe(false);
 
@@ -402,12 +442,14 @@ describe('equal()', () => {
     });
 
     it('should compare dates', () => {
+
         expect(Dust.equal(new Date(0), new Date(0))).toBe(true);
         expect(Dust.equal(new Date(0), new Date(1))).toBe(false);
         expect(Dust.equal(new Date(NaN), new Date(NaN))).toBe(true);
     });
 
     it('should compare errors', () => {
+
         const error = new Error('x');
 
         expect(Dust.equal(error, new Error('x'))).toBe(true);
@@ -416,6 +458,7 @@ describe('equal()', () => {
     });
 
     it('should compare regexps', () => {
+
         const regex = /x/i;
 
         expect(Dust.equal(regex, /x/i)).toBe(true);
@@ -423,11 +466,13 @@ describe('equal()', () => {
     });
 
     it('should compare arraybuffers', () => {
+
         expect(Dust.equal(new ArrayBuffer(1), new ArrayBuffer(1))).toBe(true);
         expect(Dust.equal(new ArrayBuffer(1), new ArrayBuffer(2))).toBe(false);
     });
 
     it('should compare typed arrays', () => {
+
         const buff = new ArrayBuffer(16);
         for (const ctor of internals.typedArrays) {
             expect(Dust.equal(new ctor(buff), new ctor(buff))).toBe(true);
@@ -436,6 +481,7 @@ describe('equal()', () => {
     });
 
     it('should compare dataviews', () => {
+
         const buff = new ArrayBuffer(16);
 
         expect(Dust.equal(new DataView(buff, 8, 1), new DataView(buff, 8, 1))).toBe(true);
@@ -445,17 +491,20 @@ describe('equal()', () => {
     });
 
     it('should return false for weaksets, weakmaps and promises', () => {
+
         expect(Dust.equal(new WeakMap(), new WeakMap())).toBe(false);
         expect(Dust.equal(new WeakSet(), new WeakSet())).toBe(false);
         expect(Dust.equal(new Promise((res) => res(1), new Promise((res) => res(1))))).toBe(false);
     });
 
     it('should compare buffers', () => {
+
         expect(Dust.equal(Buffer.from([1]), Buffer.from([1]))).toBe(true);
         expect(Dust.equal(Buffer.from([1]), Buffer.from([2]))).toBe(false);
     });
 
     it('should compare arrays', () => {
+
         expect(Dust.equal([], [])).toBe(true);
         expect(Dust.equal([1, { a: 'x' }, 3], [1, { a: 'x' }, 3])).toBe(true);
         expect(Dust.equal([], [1])).toBe(false);
@@ -463,6 +512,7 @@ describe('equal()', () => {
     });
 
     it('should compare holey arrays', () => {
+
         const arr = new Array(3);
         const arr2 = new Array(3);
 
@@ -475,8 +525,10 @@ describe('equal()', () => {
     });
 
     it('should compare arguments with arrays', () => {
+
         let arg1;
         const fn = function () {
+
             arg1 = arguments;
         };
 
@@ -486,14 +538,17 @@ describe('equal()', () => {
     });
 
     it('should compare arguments objects', () => {
+
         let arg1;
         let arg2;
 
         const fn = function () {
+
             arg1 = arguments;
         };
 
         const fn2 = function () {
+
             arg2 = arguments;
         };
 
@@ -504,6 +559,7 @@ describe('equal()', () => {
     });
 
     it('should compare sets', () => {
+
         expect(Dust.equal(new Set(), new Set())).toBe(true);
         expect(Dust.equal(new Set(), new Set([1]))).toBe(false);
         expect(Dust.equal(new Set([1, { a: 'x' }, 3]), new Set([1, { a: 'x' }, 3]))).toBe(true);
@@ -511,6 +567,7 @@ describe('equal()', () => {
     });
 
     it('should return true for sets with same items but different orderings', () => {
+
         expect(Dust.equal(new Set([1, { a: 'x' }]), new Set([{ a: 'x' }, 1]))).toBe(true);
 
         const obj = {};
@@ -519,6 +576,7 @@ describe('equal()', () => {
     });
 
     it('should compare maps', () => {
+
         expect(Dust.equal(new Map(), new Map())).toBe(true);
         expect(Dust.equal(new Map(), new Map([['x', 1]]))).toBe(false);
         expect(Dust.equal(new Map([[[1], { a: 'x' }]]), new Map([[[1], { a: 'x' }]]))).toBe(true);
@@ -527,6 +585,7 @@ describe('equal()', () => {
     });
 
     it('should return true for maps with same items but different orderings', () => {
+
         expect(Dust.equal(new Map([[[1], 1], [[2], 2]]), new Map([[[2], 2], [[1], 1]]))).toBe(true);
 
         const obj = { a: 1 };
@@ -535,6 +594,7 @@ describe('equal()', () => {
     });
 
     it('should compare objects', () => {
+
         expect(Dust.equal({ a: undefined }, {})).toBe(false);
         expect(Dust.equal({}, {})).toBe(true);
         expect(Dust.equal({ a: undefined }, { a: undefined })).toBe(true);
@@ -544,13 +604,16 @@ describe('equal()', () => {
     });
 
     it('should ignore symbol keys', () => {
+
         const sym = Symbol('x');
         expect(Dust.equal({ a: 'x', [sym]: 1 }, { a: 'x', [sym]: 2 }, { symbol: false })).toBe(true);
     });
 
     it('should compare class instances', () => {
+
         class X {
             constructor() {
+
                 this.a = 1;
             }
         }
@@ -559,11 +622,13 @@ describe('equal()', () => {
     });
 
     it('should compare objects without comparing descriptors', () => {
+
         const obj = { a: 'x', b: 'x' };
         const obj2 = Object.defineProperties({},
             {
                 a: {
                     get() {
+
                         return this.b;
                     },
                 },
@@ -581,10 +646,12 @@ describe('equal()', () => {
     });
 
     it('should compare objects and their descriptors', () => {
+
         const descriptors = {
             a: { enumerable: true, value: 1 },
             b: {
                 get() {
+
                     return this.a;
                 },
             },
@@ -619,6 +686,7 @@ describe('equal()', () => {
 
             b: {
                 get() {
+
                     return this.a;
                 },
             },
@@ -628,6 +696,7 @@ describe('equal()', () => {
     });
 
     it('should handle basic circular references', () => {
+
         const obj = {};
         const obj2 = {};
         obj.a = obj;
@@ -637,6 +706,7 @@ describe('equal()', () => {
     });
 
     it('should handle deep circular references', () => {
+
         const obj = {};
         const obj2 = { a: {} };
         const obj3 = { a: { a: {} } };
@@ -653,6 +723,7 @@ describe('equal()', () => {
     });
 
     it('should handle single circular references', () => {
+
         const obj = {};
         const obj2 = { x: {} };
         obj.x = obj;
@@ -662,6 +733,7 @@ describe('equal()', () => {
     });
 
     it('should handle complex circular references', () => {
+
         const obj = {};
         const obj2 = { x: {}, y: obj };
         obj2.x.x = obj2;
@@ -683,8 +755,10 @@ describe('equal()', () => {
     });
 
     it('should compare example objects', () => {
+
         class X {
             constructor(someValue) {
+
                 this.someValue = someValue;
             }
         }
@@ -746,7 +820,9 @@ describe('equal()', () => {
 });
 
 describe('get()', () => {
+
     it('should throw on incorrect parameters', () => {
+
         expect(() => Dust.get('x')).toThrow('Target must be an object');
         expect(() => Dust.get({}, 1)).toThrow('Path must be a non-empty string');
         expect(() => Dust.get({}, null)).toThrow('Path must be a non-empty string');
@@ -756,17 +832,20 @@ describe('get()', () => {
     });
 
     it('should throw on invalid paths', () => {
+
         expect(() => Dust.get({}, '.')).toThrow('Key must be a non-empty string');
         expect(() => Dust.get({}, '..')).toThrow('Key must be a non-empty string');
         expect(() => Dust.get({}, 'x.')).toThrow('Key must be a non-empty string');
     });
 
     it('should return the object if path is not provided', () => {
+
         const obj = {};
         expect(Dust.get(obj)).toBe(obj);
     });
 
     it('should get values inside arrays', () => {
+
         const arr = [1, { a: 'x' }, 2];
 
         expect(Dust.get(arr, '0')).toBe(1);
@@ -780,6 +859,7 @@ describe('get()', () => {
     });
 
     it('should get values inside arrays using wildcard', () => {
+
         const arr = [{ a: 1 }, { a: 2 }, { a: 3 }];
 
         expect(Dust.equal(Dust.get(arr, '*'), arr)).toBe(true);
@@ -794,12 +874,15 @@ describe('get()', () => {
     });
 
     it('should get values inside arrays using nested wildcards', () => {
+
         const arr = [[{ a: 1 }, { a: 2 }], [{ a: 3 }], [{ a: 4 }]];
         expect(Dust.equal(Dust.get(arr, '*.*.a'), [[1, 2], [3], [4]])).toBe(true);
     });
 
     it('should get values inside arguments', () => {
+
         const fn = function () {
+
             expect(Dust.get(arguments, '0')).toBe(1);
             expect(Dust.get(arguments, '-1')).toBe(1);
             expect(Dust.get(arguments, '1')).toBe(undefined);
@@ -813,7 +896,9 @@ describe('get()', () => {
     });
 
     it('should get all values inside arguments', () => {
+
         const fn = function () {
+
             expect(Dust.equal(Dust.get(arguments, '*'), [{ a: 1 }, { a: 2 }, { b: 3 }])).toBe(true);
             expect(Dust.equal(Dust.get(arguments, '*.a.b'), [undefined, undefined, undefined])).toBe(true);
             expect(Dust.equal(Dust.get(arguments, '*.a'), [1, 2, undefined])).toBe(true);
@@ -824,6 +909,7 @@ describe('get()', () => {
     });
 
     it('should get values inside typed arrays', () => {
+
         for (const ctor of internals.typedArrays) {
             const view = new ctor([1, 2]);
 
@@ -840,6 +926,7 @@ describe('get()', () => {
     });
 
     it('should get values inside maps', () => {
+
         const map = new Map([['x', 1], ['y', { a: 'x' }], ['x.y', 1]]);
 
         expect(Dust.get(map, 'x')).toBe(1);
@@ -850,6 +937,7 @@ describe('get()', () => {
     });
 
     it('should get values inside objects', () => {
+
         const obj = {
             a: 'x',
             0: 'y',
@@ -868,15 +956,18 @@ describe('get()', () => {
     });
 
     it('should not get non-own values', () => {
+
         expect(Dust.get(Object.create({ a: 1 }), 'a')).toBe(undefined);
     });
 
     it('should allow split keys', () => {
+
         const keys = Dust.splitPath('x.y');
         expect(Dust.get({ x: { y: 1 } }, keys)).toBe(1);
     });
 
     it('should get values inside example object', () => {
+
         const obj = {
             a: 1,
             b: [1, 2, 3],
@@ -895,7 +986,9 @@ describe('get()', () => {
 });
 
 describe('isObject()', () => {
+
     it('should return false for non objects', () => {
+
         expect(Dust.isObject('x')).toBe(false);
         expect(Dust.isObject(1)).toBe(false);
         expect(Dust.isObject(false)).toBe(false);
@@ -906,6 +999,7 @@ describe('isObject()', () => {
     });
 
     it('should return true for objects', () => {
+
         expect(Dust.isObject([])).toBe(true);
         expect(Dust.isObject(new Date())).toBe(true);
         expect(Dust.isObject(Object.create(null))).toBe(true);
@@ -915,7 +1009,9 @@ describe('isObject()', () => {
 });
 
 describe('merge()', () => {
+
     it('should return the target if the target and source are equal', () => {
+
         const obj = {};
 
         expect(Dust.merge(1, 1)).toBe(1);
@@ -924,11 +1020,13 @@ describe('merge()', () => {
     });
 
     it('should return the target if the source is undefined', () => {
+
         expect(Dust.merge('x', undefined)).toBe('x');
         expect(Dust.merge(null, undefined)).toBe(null);
     });
 
     it('should return the source if types are different or types are the same but not objects', () => {
+
         expect(Dust.merge(1, 2)).toBe(2);
         expect(Dust.merge(1, 'x')).toBe('x');
         expect(Dust.merge(1, null)).toBe(null);
@@ -936,6 +1034,7 @@ describe('merge()', () => {
     });
 
     it('should return the source if the objects are different', () => {
+
         const source = [];
 
         expect(Dust.merge({}, source)).toBe(source);
@@ -948,15 +1047,18 @@ describe('merge()', () => {
     });
 
     it('should return the source if the objects are the same and are not object/map/set/array', () => {
+
         const rx = /y/;
         expect(Dust.merge(/x/, rx)).toBe(rx);
     });
 
     it('should merge 2 arrays', () => {
+
         expect(Dust.equal(Dust.merge([1, 2, 3], [4, 5]), [4, 5, 3])).toBe(true);
     });
 
     it('should merge 2 holey arrays', () => {
+
         const arr = new Array(2);
         const arr2 = new Array(2);
         arr[0] = 1;
@@ -966,18 +1068,21 @@ describe('merge()', () => {
     });
 
     it('should merge 2 sets', () => {
+
         const set = new Set([1, 2, 3]);
         const set2 = new Set([3, 4, 5]);
         expect(Dust.equal(Dust.merge(set, set2), new Set([1, 2, 3, 4, 5]))).toBe(true);
     });
 
     it('should merge 2 maps', () => {
+
         const map = new Map([[1, 'x'], [2, 'y']]);
         const map2 = new Map([[1, 'z']]);
         expect(Dust.equal(Dust.merge(map, map2), new Map([[1, 'z'], [2, 'y']]))).toBe(true);
     });
 
     it('should merge 2 objects', () => {
+
         const sym = Symbol('x');
         const obj = {
             a: 1,
@@ -1013,13 +1118,16 @@ describe('merge()', () => {
     });
 
     it('should ignore symbol keys', () => {
+
         const sym = Symbol('x');
         expect(Dust.equal(Dust.merge({ [sym]: 'x' }, { [sym]: 'y' }), { [sym]: 'y' })).toBe(true);
     });
 
     it('should merge class instances', () => {
+
         class X {
             constructor() {
+
                 this.a = 1;
             }
         }
@@ -1032,7 +1140,9 @@ describe('merge()', () => {
     });
 
     it('should merge object descriptors', () => {
+
         const getter = function () {
+
             return 1;
         };
 
@@ -1125,6 +1235,7 @@ describe('merge()', () => {
     });
 
     it('should handle basic circular references', () => {
+
         const obj = {};
         const obj2 = {};
         obj.a = obj;
@@ -1135,6 +1246,7 @@ describe('merge()', () => {
     });
 
     it('should handle deep circular references', () => {
+
         const obj = {};
         const obj2 = { a: {} };
         obj.a = obj;
@@ -1149,6 +1261,7 @@ describe('merge()', () => {
     });
 
     it('should handle single circular references', () => {
+
         const obj = {};
         const obj2 = { x: {} };
         obj.x = obj;
@@ -1158,6 +1271,7 @@ describe('merge()', () => {
     });
 
     it('should handle complex circular references', () => {
+
         const obj = {};
         const obj2 = { x: {}, y: obj };
         obj2.x.x = obj2;
@@ -1170,6 +1284,7 @@ describe('merge()', () => {
     });
 
     it('should handle circular references', () => {
+
         const obj = {};
         const obj2 = {};
         obj.a = obj;
@@ -1179,6 +1294,7 @@ describe('merge()', () => {
     });
 
     it('should handle complex circular references', () => {
+
         const obj = {};
         const obj2 = {};
 
@@ -1197,7 +1313,9 @@ describe('merge()', () => {
 });
 
 describe('set()', () => {
+
     it('should throw on incorrect parameters', () => {
+
         expect(() => Dust.set({}, 1)).toThrow('Path must be a non-empty string');
         expect(() => Dust.set({}, null)).toThrow('Path must be a non-empty string');
         expect(() => Dust.set({}, '')).toThrow('Path must be a non-empty string');
@@ -1206,17 +1324,20 @@ describe('set()', () => {
     });
 
     it('should throw on invalid paths', () => {
+
         expect(() => Dust.get({}, '.')).toThrow('Key must be a non-empty string');
         expect(() => Dust.get({}, '..')).toThrow('Key must be a non-empty string');
         expect(() => Dust.get({}, 'x.')).toThrow('Key must be a non-empty string');
     });
 
     it('should return the object if path is not provided provided', () => {
+
         const obj = {};
         expect(Dust.set(obj)).toBe(obj);
     });
 
     it('should set value for arrays', () => {
+
         expect(Dust.equal(Dust.set([1], '0', 2), [2])).toBe(true);
         expect(Dust.equal(Dust.set([], '0', 1), [1])).toBe(true);
         expect(Dust.equal(Dust.set([1], '-1', 3), [3])).toBe(true);
@@ -1230,7 +1351,9 @@ describe('set()', () => {
     });
 
     it('should set value for arguments objects', () => {
+
         const fn = function () {
+
             expect(Dust.set(arguments, '0', 2)[0]).toBe(2);
         };
 
@@ -1238,6 +1361,7 @@ describe('set()', () => {
     });
 
     it('should set value for typed arrays', () => {
+
         for (const ctor of internals.typedArrays) {
             expect(Dust.equal(Dust.set(new ctor([1, 2]), '0', 2), new ctor([2, 2]))).toBe(true);
             expect(Dust.equal(Dust.set(new ctor([1, 2]), '-1', 3), new ctor([1, 3]))).toBe(true);
@@ -1248,6 +1372,7 @@ describe('set()', () => {
     });
 
     it('should set value for maps', () => {
+
         expect(Dust.equal(Dust.set(new Map(), 'x', 1), new Map([['x', 1]]))).toBe(true);
         expect(Dust.equal(Dust.set(new Map([['x', [1]]]), 'x', 2), new Map([['x', 2]]))).toBe(true);
         expect(Dust.equal(Dust.set(new Map([['x', [1]]]), 'x.0', 2), new Map([['x', [2]]]))).toBe(true);
@@ -1257,6 +1382,7 @@ describe('set()', () => {
     });
 
     it('should set value for objects', () => {
+
         expect(Dust.equal(Dust.set({ x: 1 }, 'x', 2), { x: 2 })).toBe(true);
         expect(Dust.equal(Dust.set({}, 'x', 1), { x: 1 })).toBe(true);
         expect(Dust.equal(Dust.set({ x: 1 }, 'x.y', 2), { x: { y: 2 } })).toBe(true);
@@ -1269,6 +1395,7 @@ describe('set()', () => {
     });
 
     it('should not set non-own values', () => {
+
         const obj = Object.create({ a: 1 });
         const obj2 = Object.create({ a: { b: 1 } });
 
@@ -1277,11 +1404,13 @@ describe('set()', () => {
     });
 
     it('should allow split keys', () => {
+
         const keys = Dust.splitPath('x.y');
         expect(Dust.equal(Dust.set({}, keys, 2), { x: { y: 2 } })).toBe(true);
     });
 
     it('should set values inside example objects', () => {
+
         expect(Dust.equal(Dust.set({}, 'a', 1), { a: 1 })).toBe(true);
         expect(Dust.equal(Dust.set({}, 'a.b', 1), { a: { b: 1 } })).toBe(true);
         expect(Dust.equal(Dust.set({}, 'a.0', 1), { a: [1] })).toBe(true);
@@ -1293,7 +1422,9 @@ describe('set()', () => {
 });
 
 describe('splitPath()', () => {
+
     it('should throw on invalid errors', () => {
+
         expect(() => Dust.splitPath(1)).toThrow('Path must be a non-empty string');
         expect(() => Dust.splitPath('')).toThrow('Path must be a non-empty string');
         expect(() => Dust.splitPath(null)).toThrow('Path must be a non-empty string');
@@ -1302,11 +1433,13 @@ describe('splitPath()', () => {
     });
 
     it('should return split keys', () => {
+
         const split = Dust.splitPath('x.y.z');
         expect(Dust.splitPath(split)).toBe(split);
     });
 
     it('should clone split keys', () => {
+
         const keys = Dust.splitPath('x.y.z');
         const cloned = Dust.splitPath(keys, { clone: true });
 
@@ -1315,23 +1448,28 @@ describe('splitPath()', () => {
     });
 
     it('should split paths', () => {
+
         expect(Dust.equal(Dust.splitPath('x.y.z'), ['x', 'y', 'z'])).toBe(true);
         expect(Dust.equal(Dust.splitPath('x.0.z'), ['x', '0', 'z'])).toBe(true);
     });
 
     it('should ignore escaped "."', () => {
+
         expect(Dust.equal(Dust.splitPath('x\\.y.z'), ['x.y', 'z'])).toBe(true);
     });
 
     it('should ignore "\\" if not followed by a "."', () => {
+
         expect(Dust.equal(Dust.splitPath('x\\y.z'), ['x\\y', 'z'])).toBe(true);
     });
 
     it('should escape "\\"', () => {
+
         expect(Dust.equal(Dust.splitPath('x\\\\.z'), ['x\\', 'z'])).toBe(true);
     });
 
     it('should throw on invalid "."', () => {
+
         expect(() => Dust.splitPath('.')).toThrow('Key must be a non-empty string');
         expect(() => Dust.splitPath('.x')).toThrow('Key must be a non-empty string');
         expect(() => Dust.splitPath('x.')).toThrow('Key must be a non-empty string');

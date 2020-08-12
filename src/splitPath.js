@@ -5,6 +5,7 @@ const Assert = require('./assert');
 const internals = {};
 
 module.exports = function (path, options = {}) {
+
     if (Array.isArray(path)) {
         return options.clone ? [...path] : path;
     }
@@ -26,9 +27,11 @@ module.exports = function (path, options = {}) {
 };
 
 internals.encode = function (path) {
+
     return path.replace(/\\\\/g, '\u0000').replace(/\\\./g, '\u0001');
 };
 
 internals.decode = function (path) {
+
     return path.replace(/\u0000/g, '\\').replace(/\u0001/g, '.');
 };

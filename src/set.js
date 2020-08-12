@@ -8,6 +8,7 @@ const Utils = require('./utils');
 const internals = {};
 
 module.exports = function (target, path, value) {
+
     Assert(IsObject(target), 'Target must be an object');
 
     if (path === undefined) {
@@ -72,6 +73,7 @@ module.exports = function (target, path, value) {
 };
 
 internals.next = function (key) {
+
     const idx = Utils.idx(key, 0);
     if (idx === false) {
         return {};

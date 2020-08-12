@@ -6,6 +6,7 @@ const Utils = require('./utils');
 const internals = {};
 
 module.exports = internals.equal = function (value, ref, options = {}, _seen = new WeakSet()) {
+
     const isEqual = options.strict !== false ? value === ref : internals.is(value, ref);
     if (isEqual) {
         return true;
@@ -216,6 +217,7 @@ internals.is = function (value, ref) {
 };
 
 internals.compareArrayLike = function (value, ref, options, seen) {
+
     const length = value.length;
     if (length !== ref.length) {
         return false;

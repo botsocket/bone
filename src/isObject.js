@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = function (value) {
+
     if (!value) {
         return false;
     }

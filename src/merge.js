@@ -6,6 +6,7 @@ const Utils = require('./utils');
 const internals = {};
 
 module.exports = internals.merge = function (target, source, options = {}, _seen = new WeakSet()) {
+
     if (target === source) {
         return target;
     }

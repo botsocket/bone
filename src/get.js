@@ -8,6 +8,7 @@ const Utils = require('./utils');
 const internals = {};
 
 module.exports = function (target, path) {
+
     Assert(IsObject(target), 'Target must be an object');
 
     if (path === undefined) {
@@ -18,6 +19,7 @@ module.exports = function (target, path) {
 };
 
 internals.get = function (target, path) {
+
     const keys = SplitPath(path, { clone: true });
     while (keys.length) {
         if (!IsObject(target)) {
@@ -59,6 +61,7 @@ internals.get = function (target, path) {
 };
 
 internals.getAll = function (target, keys) {
+
     const results = [];
     for (let i = 0; i < target.length; i++) {
         results.push(internals.get(target[i], keys));

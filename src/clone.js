@@ -6,6 +6,7 @@ const Utils = require('./utils');
 const internals = {};
 
 module.exports = internals.clone = function (value, options = {}, _seen = new WeakSet()) {
+
     if (!IsObject(value)) {
         return value;
     }
@@ -124,6 +125,7 @@ module.exports = internals.clone = function (value, options = {}, _seen = new We
 };
 
 internals.cloneArrayBuffer = function (value) {
+
     const cloned = new ArrayBuffer(value.byteLength);
     new Uint8Array(cloned).set(new Uint8Array(value));
     return cloned;

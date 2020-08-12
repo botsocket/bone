@@ -6,7 +6,7 @@
  *
  * @returns The cloned value.
  */
-declare function clone<Value>(value: Value, options?: clone.Options): Value;
+declare function clone<T>(value: T, options?: clone.Options): T;
 
 declare namespace clone {
     interface Options {

@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = function (condition, message) {
+
     if (condition) {
         return;
     }
