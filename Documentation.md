@@ -30,15 +30,6 @@ const cloned = Clone([1, 2, 3]);
 
 ## API
 
--   [`assert()`](#assertcondition-message)
--   [`clone()`](#clonevalue-options)
--   [`equal()`](#equalvalue-ref-options)
--   [`get()`](#gettarget-path)
--   [`isObject()`](#isObjectvalue)
--   [`merge()`](#mergetarget-source-options)
--   [`set()`](#settarget-path-value)
--   [`splitPath()`](#splitpathpath-options)
-
 ### `assert(condition, message)`
 
 Throws an error if a condition is falsy where:
