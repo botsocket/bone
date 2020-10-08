@@ -2,28 +2,28 @@
 
 ## Introduction
 
-Dust is a central library to house Bot Bind specific utility methods.
+Bone is a collection of utility methods used by the BotSocket ecosystem.
 
 ## Installation
 
-Dust is available on npm:
+Bone is available on npm:
 
 ```bash
-npm install @botbind/dust
+npm install @botsocket/bone
 ```
 
 ## Usage
 
 ```js
-const Dust = require('@botbind/dust');
+const Bone = require('@botsocket/bone');
 
-const cloned = Dust.clone([1, 2, 3]);
+const cloned = Bone.clone([1, 2, 3]);
 ```
 
 Or:
 
 ```js
-const Clone = require('@botbind/dust/src/clone');
+const Clone = require('@botsocket/bone/src/clone');
 
 const cloned = Clone([1, 2, 3]);
 ```
@@ -38,14 +38,14 @@ Throws an error if a condition is falsy where:
 -   `message`: The error message to throw.
 
 ```js
-Dust.assert(false); // Throws 'Unknown error'
-Dust.assert(false, ''); // Throws 'Unknown error'
-Dust.assert(false, 'x'); // Throws 'x'
-Dust.assert(false, {}); // Throws '[object Object]'
-Dust.assert(false, new TypeError('x')); // Throws 'TypeError: x'
-Dust.assert('', 'x'); // Throws 'x'
-Dust.assert(true, 'x'); // Does not throw
-Dust.assert(1, 'x'); // Does not throw
+Bone.assert(false); // Throws 'Unknown error'
+Bone.assert(false, ''); // Throws 'Unknown error'
+Bone.assert(false, 'x'); // Throws 'x'
+Bone.assert(false, {}); // Throws '[object Object]'
+Bone.assert(false, new TypeError('x')); // Throws 'TypeError: x'
+Bone.assert('', 'x'); // Throws 'x'
+Bone.assert(true, 'x'); // Does not throw
+Bone.assert(1, 'x'); // Does not throw
 ```
 
 [Back to top](#api)
@@ -75,17 +75,17 @@ const obj = {
     [sym]: 2,
 };
 
-const cloned = Dust.clone(obj);
+const cloned = Bone.clone(obj);
 obj.b === cloned.b; // false
 cloned.b[1]; // 2
 obj.d === cloned.d; // true
 cloned.c.get(ref); // 1
 
 
-const shallow = Dust.clone(obj, { shallow: true });
+const shallow = Bone.clone(obj, { shallow: true });
 obj.b === shallow.b;
 
-const noSymbol = Dust.clone(obj, { symbol: false });
+const noSymbol = Bone.clone(obj, { symbol: false });
 noSymbol[sym]; // undefined
 ```
 
@@ -132,37 +132,37 @@ const obj2 = {
     [sym]: 1,
 };
 
-Dust.equal(obj, obj2); // true
-Dust.equal(obj, obj2, { strict: false }); // false (due to Object.is(-0, +0) returns false)
+Bone.equal(obj, obj2); // true
+Bone.equal(obj, obj2, { strict: false }); // false (due to Object.is(-0, +0) returns false)
 
-const obj3 = Dust.clone(obj2);
+const obj3 = Bone.clone(obj2);
 obj3[sym] = 2;
 
-Dust.equal(obj, obj3); // false
-Dust.equal(obj, obj3, { symbol: false }); // true
+Bone.equal(obj, obj3); // false
+Bone.equal(obj, obj3, { symbol: false }); // true
 
-const obj4 = Dust.clone(obj2);
+const obj4 = Bone.clone(obj2);
 obj4.d = new X(2);
 
-Dust.equal(obj, obj4); // false (due to different 'someValue's)
+Bone.equal(obj, obj4); // false (due to different 'someValue's)
 
-const obj5 = Dust.clone(obj2);
+const obj5 = Bone.clone(obj2);
 obj5.f = () => 1;
 
-Dust.equal(obj, obj5); // false (due to different function reference)
-Dust.equal(obj, obj5, { deepFunction: true }); // true
+Bone.equal(obj, obj5); // false (due to different function reference)
+Bone.equal(obj, obj5, { deepFunction: true }); // true
 
-const obj6 = Dust.clone(obj);
+const obj6 = Bone.clone(obj);
 obj6.g = 1;
 
-const obj7 = Object.defineProperties(Dust.clone(obj), {
+const obj7 = Object.defineProperties(Bone.clone(obj), {
     g: {
         value: 1,
     },
 });
 
-Dust.equal(obj6, obj7); // true
-Dust.equal(obj6, obj7, { compareDescriptors: true }); // false
+Bone.equal(obj6, obj7); // true
+Bone.equal(obj6, obj7, { compareDescriptors: true }); // false
 
 ```
 
@@ -186,12 +186,12 @@ const obj = {
     'x.y.z': 1,
 };
 
-Dust.get(obj, 'a'); // 1
-Dust.get(obj, 'b.1'); // 2
-Dust.get(obj, 'b.-1'); // 3
-Dust.get(obj, 'c.key'); // x
-Dust.get(obj, 'x\\.y\\.z'); // 1
-Dust.get(obj, 'd.*.a'); // [ 1, 2, 3 ]
+Bone.get(obj, 'a'); // 1
+Bone.get(obj, 'b.1'); // 2
+Bone.get(obj, 'b.-1'); // 3
+Bone.get(obj, 'c.key'); // x
+Bone.get(obj, 'x\\.y\\.z'); // 1
+Bone.get(obj, 'd.*.a'); // [ 1, 2, 3 ]
 ```
 
 [Back to top](#api)
@@ -203,10 +203,10 @@ Checks if a value is an object where:
 -   `value`: The value to check.
 
 ```js
-Dust.isObject('x'); // false
-Dust.isObject(null); // false
-Dust.isObject({}); // true
-Dust.isObject(new Date()); // true
+Bone.isObject('x'); // false
+Bone.isObject(null); // false
+Bone.isObject({}); // true
+Bone.isObject(new Date()); // true
 ```
 
 [Back to top](#api)
@@ -243,9 +243,9 @@ const obj2 = {
     [sym]: 'x',
 };
 
-const result = Dust.merge(obj, obj2);
+const result = Bone.merge(obj, obj2);
 
-Dust.equal(result, {
+Bone.equal(result, {
     a: 1,
     b: 2,
     c: [{ a: 'x', b: 'y' }, 4],
@@ -270,13 +270,13 @@ Sets a value nested inside an object, map or array given its path where:
 Note that this method mutates the target value. For array-like objects, the target will be returned if the reference key is a invalid index. To escape the separator, use `\`.
 
 ```js
-Dust.set({}, 'a', 1); // { a: 1 }
-Dust.set({}, 'a.b', 1); // { a: { b: 1 } }
-Dust.set({}, 'a.0', 1); // { a: [ 1 ] }
-Dust.set([], '0', 1); // [ 1 ]
-Dust.set([1, 2], '-1', 3); // [ 1, 3 ]
-Dust.set(new Map([['key', 'x']]), 'key', 'y'); // Map { key => y }
-Dust.set({}, 'x\\.y\\.z', 1); // { 'x.y.z': 1 }
+Bone.set({}, 'a', 1); // { a: 1 }
+Bone.set({}, 'a.b', 1); // { a: { b: 1 } }
+Bone.set({}, 'a.0', 1); // { a: [ 1 ] }
+Bone.set([], '0', 1); // [ 1 ]
+Bone.set([1, 2], '-1', 3); // [ 1, 3 ]
+Bone.set(new Map([['key', 'x']]), 'key', 'y'); // Map { key => y }
+Bone.set({}, 'x\\.y\\.z', 1); // { 'x.y.z': 1 }
 ```
 
 [Back to top](#api)
@@ -292,10 +292,10 @@ Splits a path to an array of individual keys where:
 To escape the separator, use `\`.
 
 ```js
-Dust.splitPath('x.y.z'); // [ x, y, z ]
-Dust.splitPath('x\\.y.z'); // [ x.y, z ]
-Dust.splitPath('x\\y.z'); // [ x\y, z ]
-Dust.splitPath('x\\\\.z'); // [ x\, z ]
+Bone.splitPath('x.y.z'); // [ x, y, z ]
+Bone.splitPath('x\\.y.z'); // [ x.y, z ]
+Bone.splitPath('x\\y.z'); // [ x\y, z ]
+Bone.splitPath('x\\\\.z'); // [ x\, z ]
 ```
 
 [Back to top](#api)

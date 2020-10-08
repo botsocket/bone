@@ -1,7 +1,7 @@
 {
-    "name": "@botbind/dust",
-    "version": "14.0.0",
-    "description": "A utility library used by Bot Bind's open source",
+    "name": "@botsocket/bone",
+    "version": "1.0.0",
+    "description": "Utility methods used by the BotSocket ecosystem",
     "main": "src/index.js",
     "types": "src/index.d.ts",
     "files": [
@@ -9,14 +9,14 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/botbind/dust.git"
+        "url": "git+https://github.com/botsocket/bone.git"
     },
-    "author": "Bot Bind's Team",
+    "author": "BotSocket",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/botbind/dust/issues"
+        "url": "https://github.com/botsocket/bone/issues"
     },
-    "homepage": "https://github.com/botbind/dust#readme",
+    "homepage": "https://github.com/botsocket/bone#readme",
     "scripts": {
         "lint": "eslint . --report-unused-disable-directives && echo \"No errors found\"",
         "lint:fix": "eslint . --fix && echo \"No errors found\"",

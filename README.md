@@ -1,8 +1,6 @@
-# Dust
+# Bone
 
-![Bot Bind's logo](https://botbind.com/images/logoBB.png)
-
-## Utility methods for the Bot Bind ecosystem
+## Utility methods used by the BotSocket ecosystem
 
 ### Acknowledgments
 
@@ -14,7 +12,7 @@ Special thanks to all contributors of the following libraries:
 
 ### Useful links
 
--   [Documentation and API](https://github.com/botbind/dust/blob/master/Documentation.md)
--   [Release notes](https://github.com/botbind/dust/labels/release%20notes)
--   [Bot Bind](https://botbind.com)
--   [Nebula](https://github.com/botbind/nebula)
+-   [Documentation and API](https://github.com/botsocket/bone/blob/master/Documentation.md)
+-   [Release notes](https://github.com/botsocket/bone/labels/release%20notes)
+-   [BotSocket](https://botsocket.com)
+-   [Emerald](https://github.com/botsocket/emerald)

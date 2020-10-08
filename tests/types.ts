@@ -1,4 +1,4 @@
-import Dust = require('../src');
+import Bone = require('../src');
 
 let voidType: void;
 let boolType: boolean;
@@ -10,70 +10,70 @@ let guard: unknown;
 
 // assert()
 
-Dust.assert('x');
-Dust.assert(true);
-Dust.assert(true, {});
-Dust.assert(true, '');
-Dust.assert(true, new Error());
-voidType = Dust.assert(true);
+Bone.assert('x');
+Bone.assert(true);
+Bone.assert(true, {});
+Bone.assert(true, '');
+Bone.assert(true, new Error());
+voidType = Bone.assert(true);
 
 // clone()
 
-Dust.clone('x');
-Dust.clone(1);
-Dust.clone(false);
-Dust.clone({ a: 1 });
-Dust.clone({}, { shallow: true, symbol: true });
-strType = Dust.clone('x');
+Bone.clone('x');
+Bone.clone(1);
+Bone.clone(false);
+Bone.clone({ a: 1 });
+Bone.clone({}, { shallow: true, symbol: true });
+strType = Bone.clone('x');
 
-const cloneReturnVal: { a: number } = Dust.clone({ a: 1 });
-const cloneReturnVal2: { a: string } = Dust.clone({} as { a: string });
-function withCloneOptions(options: Dust.clone.Options) { }
+const cloneReturnVal: { a: number } = Bone.clone({ a: 1 });
+const cloneReturnVal2: { a: string } = Bone.clone({} as { a: string });
+function withCloneOptions(options: Bone.clone.Options) { }
 
 // equal()
 
-Dust.equal(1, 2);
-Dust.equal([], [], { compareDescriptors: true, symbol: true, deepFunction: true });
-boolType = Dust.equal([], {});
+Bone.equal(1, 2);
+Bone.equal([], [], { compareDescriptors: true, symbol: true, deepFunction: true });
+boolType = Bone.equal([], {});
 
 // get()
 
-Dust.get({});
-Dust.get({}, undefined);
-Dust.get({}, undefined);
-Dust.get({}, 'x');
+Bone.get({});
+Bone.get({}, undefined);
+Bone.get({}, undefined);
+Bone.get({}, 'x');
 
 // set()
 
-Dust.set({}, undefined, 1);
-Dust.set({}, undefined, 1);
-Dust.set({}, 'x', 1);
+Bone.set({}, undefined, 1);
+Bone.set({}, undefined, 1);
+Bone.set({}, 'x', 1);
 
 // isObject()
 
-if (Dust.isObject(guard)) {
+if (Bone.isObject(guard)) {
     objType = guard;
 }
 
 // merge()
 
-strType = Dust.merge('x', 'y');
-strType = Dust.merge([1], 'y');
-arrNumType = Dust.merge('x', [1]);
+strType = Bone.merge('x', 'y');
+strType = Bone.merge([1], 'y');
+arrNumType = Bone.merge('x', [1]);
 
-Dust.merge({}, {}, { symbol: true });
+Bone.merge({}, {}, { symbol: true });
 
-const mergeReturnVal: { a: number; b: string } = Dust.merge({ a: 1 }, { b: 'x' });
-const mergeReturnVal2: { a: number; b: number } = Dust.merge({} as { a: number }, {} as { b: number });
+const mergeReturnVal: { a: number; b: string } = Bone.merge({ a: 1 }, { b: 'x' });
+const mergeReturnVal2: { a: number; b: number } = Bone.merge({} as { a: number }, {} as { b: number });
 
 // splitPath()
 
-const keys = Dust.splitPath('x');
-Dust.splitPath(keys, { clone: true });
+const keys = Bone.splitPath('x');
+Bone.splitPath(keys, { clone: true });
 
 for (const split of keys) {
     split;
 }
 
-Dust.set({}, keys, 1);
-Dust.get({}, keys);
+Bone.set({}, keys, 1);
+Bone.get({}, keys);
