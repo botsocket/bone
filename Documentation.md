@@ -30,7 +30,16 @@ const cloned = Clone([1, 2, 3]);
 
 ## API
 
-### `assert(condition, message)`
+- [`assert(condition, [message])`](#assertcondition-message)
+- [`clone(value, [options])`](#clonevalue-options)
+- [`equal(value, ref, [options])`](#equalvalue-ref-options)
+- [`get(target, path)`](#gettarget-path)
+- [`isObject(value)`](#isObjectvalue)
+- [`merge(target, source, [options])`](#mergetarget-source-options)
+- [`set(target, path, value)`](#settarget-path-value)
+- [`splitPath(path, [options])`](#splitPathpath-options)
+
+### `assert(condition, [message])`
 
 Throws an error if a condition is falsy where:
 
@@ -281,7 +290,7 @@ Bone.set({}, 'x\\.y\\.z', 1); // { 'x.y.z': 1 }
 
 [Back to top](#api)
 
-### `splitPath(path, options)`
+### `splitPath(path, [options])`
 
 Splits a path to an array of individual keys where:
 
