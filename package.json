@@ -18,10 +18,7 @@
     },
     "homepage": "https://github.com/botsocket/bone#readme",
     "scripts": {
-        "lint": "eslint . --report-unused-disable-directives && echo \"No errors found\"",
-        "lint:fix": "eslint . --fix && echo \"No errors found\"",
-        "test": "jest --coverage && tsc && npm run lint && echo \"No errors found\"",
-        "test:watch": "jest --watchAll"
+        "test": "jest --coverage && echo \"All tests passed\" && tsc && echo \"All type tests passed\" && eslint . --report-unused-disable-directives && echo \"No linting errors\""
     },
     "devDependencies": {
         "@hapi/eslint-plugin-hapi": "^4.3.5",
