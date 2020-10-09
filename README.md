@@ -15,4 +15,4 @@ Special thanks to all contributors of the following libraries:
 -   [Documentation and API](https://github.com/botsocket/bone/blob/master/Documentation.md)
 -   [Release notes](https://github.com/botsocket/bone/labels/release%20notes)
 -   [BotSocket](https://botsocket.com)
--   [Emerald](https://github.com/botsocket/emerald)
+-   [Moonstone](https://github.com/botsocket/moonstone)
