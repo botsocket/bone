@@ -1,4 +1,4 @@
-import Bone = require('../src');
+import * as Bone from '../src';
 
 let voidType: void;
 let boolType: boolean;
@@ -35,6 +35,7 @@ function withCloneOptions(options: Bone.clone.Options) { }
 Bone.equal(1, 2);
 Bone.equal([], [], { compareDescriptors: true, symbol: true, deepFunction: true });
 boolType = Bone.equal([], {});
+function withEqualOptions(options: Bone.equal.Options) { }
 
 // get()
 
@@ -66,6 +67,8 @@ Bone.merge({}, {}, { symbol: true });
 const mergeReturnVal: { a: number; b: string } = Bone.merge({ a: 1 }, { b: 'x' });
 const mergeReturnVal2: { a: number; b: number } = Bone.merge({} as { a: number }, {} as { b: number });
 
+function withMergeOptions(options: Bone.merge.Options) { }
+
 // splitPath()
 
 const keys = Bone.splitPath('x');
@@ -77,3 +80,5 @@ for (const split of keys) {
 
 Bone.set({}, keys, 1);
 Bone.get({}, keys);
+
+function withSplitPathOptions(options: Bone.splitPath.Options) { }
